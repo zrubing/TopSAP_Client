@@ -89,7 +89,12 @@ class AutoLoginTopSap():
         统计连接数据
         """
         data = {"method": "query_statistics"}
-        response = self.session.post(self.query_statistics_url, headers=self.json_headers, data=json.dumps(data), verify=False).json()
+        try:
+            response = self.session.post(self.query_statistics_url, headers=self.json_headers, data=json.dumps(data), verify=False, timeout=2).json()
+        except requests.exceptions.Timeout:
+            print("请求超时，正在尝试登录...")
+            self.login()
+            return None
 
         terr_code = response.get('terr_code') # != 0 
 
@@ -151,7 +156,7 @@ class AutoLoginTopSap():
             try:
                 stat = self.query_statistics()
                 print(stat)
-                if stat.get('terr_code') != 0 or stat.get('session_id') == '':
+                if stat and (stat.get('terr_code') != 0 or stat.get('session_id') == ''):
                     self.login()
             except Exception as e:
                 print(e)
