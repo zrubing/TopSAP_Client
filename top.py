@@ -36,7 +36,7 @@ class AutoLoginTopSap():
         params = {
             'serverAddr': self.host,
             'serverPort': self.port,
-            'vpn_version': 'ngvone',
+            'vpn_version': 'sm2',
             'auth_protocol': '0',
             'auth_port': self.port,
             'data_port': self.port,
