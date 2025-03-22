@@ -19,7 +19,6 @@ class AutoLoginTopSap():
         self.port = port
         self.username = username
         self.password = password
-        self.code_url = f"https://localhost:7443/api/v1/get_gid?serverAddr={self.host}&serverPort={self.port}&vpn_version=ngvone&auth_protocol=0&auth_port={self.port}&data_port=${self.port}&data_protocol=0&cert_type=0&proxyType=&proxyAddr=&proxyPort=&proxyUser=&proxyPwd=&proxyDomain=&rnd=0.21450320730512473"
         self.auto_code_url = ocr
         self.logout_url = "https://localhost:7443/api/v1/logout"
         self.login_url = "https://localhost:7443/api/v1/login_by_pwd"
@@ -31,8 +30,29 @@ class AutoLoginTopSap():
         self.form_headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
+        self.code_url = self.construct_code_url()
 
-    
+    def construct_code_url(self):
+        params = {
+            'serverAddr': self.host,
+            'serverPort': self.port,
+            'vpn_version': 'ngvone',
+            'auth_protocol': '0',
+            'auth_port': self.port,
+            'data_port': self.port,
+            'data_protocol': '0',
+            'cert_type': '0',
+            'proxyType': '',
+            'proxyAddr': '',
+            'proxyPort': '',
+            'proxyUser': '',
+            'proxyPwd': '',
+            'proxyDomain': '',
+            'rnd': '0.21450320730512473'
+        }
+        base_url = "https://localhost:7443/api/v1/get_gid"
+        return f"{base_url}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
+
     def get_code_img(self):
         """
         获取验证码图片
