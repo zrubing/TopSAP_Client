@@ -30,7 +30,7 @@ class AutoLoginTopSap():
         self.form_headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
-        self.vpn_version = 'ngvone'  # Extracted vpn_version
+        self.vpn_version = 'sm2'  # Extracted vpn_version
         self.code_url = self.construct_code_url()
 
     def construct_code_url(self):
@@ -138,8 +138,8 @@ class AutoLoginTopSap():
             } ,
             "vpn_version" : self.vpn_version,  # Use extracted vpn_version
             "auth_protocol":"0" ,
-            "auth_port": "10443" ,
-            "data_port": "10443" ,
+            "auth_port": self.port ,
+            "data_port": self.port ,
             "data_protocol": "0" ,
             "cert_type": "0" ,
             "remember_pwd": "off" 
