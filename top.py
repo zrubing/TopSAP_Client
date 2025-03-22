@@ -12,16 +12,14 @@ from requests.packages import urllib3
 urllib3.disable_warnings()
 warnings.filterwarnings("ignore")
 
-
-
 class AutoLoginTopSap():
-    def __init__(self, host, port, username, password, ocr):
+    def __init__(self, host, port, username, password, ocr, server_addr):
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         self.host = host
         self.port = port
         self.username = username
         self.password = password
-        self.code_url = "https://localhost:7443/api/v1/get_gid?serverAddr=111.33.112.66&serverPort=10443&vpn_version=ngvone&auth_protocol=0&auth_port=10443&data_port=10443&data_protocol=0&cert_type=0&proxyType=&proxyAddr=&proxyPort=&proxyUser=&proxyPwd=&proxyDomain=&rnd=0.21450320730512473"
+        self.code_url = f"https://localhost:7443/api/v1/get_gid?serverAddr={server_addr}&serverPort=10443&vpn_version=ngvone&auth_protocol=0&auth_port=10443&data_port=10443&data_protocol=0&cert_type=0&proxyType=&proxyAddr=&proxyPort=&proxyUser=&proxyPwd=&proxyDomain=&rnd=0.21450320730512473"
         self.auto_code_url = ocr
         self.logout_url = "https://localhost:7443/api/v1/logout"
         self.login_url = "https://localhost:7443/api/v1/login_by_pwd"
@@ -153,11 +151,8 @@ port = config.get(env, 'port')
 username = config.get(env, 'username')
 password = config.get(env, 'password')
 ocr = config.get(env, 'ocr_url')
-
-
+server_addr = config.get(env, 'serverAddr')
 
 print("start")
-auto_login = AutoLoginTopSap(host, port, username, password, ocr)
+auto_login = AutoLoginTopSap(host, port, username, password, ocr, server_addr)
 auto_login.listen()
-
-
