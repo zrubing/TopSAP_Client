@@ -63,11 +63,25 @@ class AutoLoginTopSap():
         """
         获取验证码图片
         """
+        response = self.session.get(self.code_url, verify=False)
+        content_type = response.headers.get('Content-Type')
 
-        with open('result.png', 'wb') as f:
-            f.write(response.content)
-        return response.content
-    
+        if content_type == 'application/json':
+            # Handle error case for JSON response
+            error_message = response.json().get('error', 'Unknown error')
+            raise Exception(f"Error from get_gid: {error_message}")
+
+        elif content_type == 'image/png':
+            if response.content == b'':
+                raise Exception("Received empty image content")
+
+            with open('result.png', 'wb') as f:
+                f.write(response.content)
+            return response.content
+        
+        else:
+            raise Exception(f"Unexpected Content-Type: {content_type}")
+
     def get_code_base64(self, content):
         """
         返回base64图片文本
@@ -134,7 +148,6 @@ class AutoLoginTopSap():
             self.last_check_time = time.time()
 
             self.already_check = True
-
 
         return response
     
