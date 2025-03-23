@@ -66,12 +66,12 @@ class AutoLoginTopSap():
         response = self.session.get(self.code_url, verify=False)
         content_type = response.headers.get('Content-Type')
 
-        if content_type == 'application/json':
+        if 'application/json' in content_type:
             # Handle error case for JSON response
             error_message = response.json().get('error', 'Unknown error')
             raise Exception(f"Error from get_gid: {error_message}")
 
-        elif content_type == 'image/png':
+        elif 'image/png' in content_type:
             if response.content == b'':
                 raise Exception("Received empty image content")
 
