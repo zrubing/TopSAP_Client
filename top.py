@@ -1,5 +1,4 @@
 from retrying import retry
- 
 import time
 import requests
 import base64
@@ -7,6 +6,7 @@ import json
 import logging
 import configparser
 import warnings
+import random  # Import random module
 from requests.packages import urllib3
 # 关闭警告
 urllib3.disable_warnings()
@@ -54,7 +54,7 @@ class AutoLoginTopSap():
             'proxyUser': '',
             'proxyPwd': '',
             'proxyDomain': '',
-            'rnd': '0.21450320730512473'
+            'rnd': random.uniform(0, 1)  # Generate a random float between 0 and 1
         }
         base_url = "https://localhost:7443/api/v1/get_gid"
         return f"{base_url}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
