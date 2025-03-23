@@ -73,7 +73,15 @@ class AutoLoginTopSap():
         返回base64图片文本
         """
         return "data:image/png;base64," + base64.b64encode(content).decode('utf-8')
-        
+
+    def get_auth_param(self):
+        """
+        {"method":"get_auth_param", "serverAddr":"","serverPort":"","proxyType":"",
+        "proxyAddr":"","proxyUser":"","proxyPwd":"",proxyDmain:"","_flag":1
+        }
+
+        """
+        pass
 
     def get_code_text(self):
         """
