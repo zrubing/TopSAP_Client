@@ -32,6 +32,9 @@ class AutoLoginTopSap():
         }
         self.vpn_version = 'sm2'  # Extracted vpn_version
         self.code_url = self.construct_code_url()
+        self.last_recv_bytes = None
+        self.last_send_bytes = None
+        self.last_check_time = time.time()
 
     def construct_code_url(self):
         params = {
@@ -98,6 +101,21 @@ class AutoLoginTopSap():
             return None
 
         terr_code = response.get('terr_code') # != 0 
+
+        # Check for send_bytes and recv_bytes conditions
+        send_bytes = response.get('send_bytes')
+        recv_bytes = response.get('recv_bytes')
+
+        if self.last_recv_bytes is not None and self.last_send_bytes is not None:
+            if (time.time() - self.last_check_time) >= 10:  # Check every 10 seconds
+                if send_bytes > self.last_send_bytes and recv_bytes == self.last_recv_bytes:
+                    print("send_bytes increased while recv_bytes unchanged, logging out...")
+                    self.logout()
+                    self.login()
+
+        self.last_recv_bytes = recv_bytes
+        self.last_send_bytes = send_bytes
+        self.last_check_time = time.time()
 
         return response
     
