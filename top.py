@@ -109,7 +109,7 @@ class AutoLoginTopSap():
         recv_bytes = response.get('recv_bytes')
 
         if self.last_recv_bytes is not None and self.last_send_bytes is not None:
-            if (time.time() - self.last_check_time) >= 10:  # Check every 10 seconds
+            if (time.time() - self.last_check_time) >= 5:  # Check every 10 seconds
                 if send_bytes > self.last_send_bytes and recv_bytes == self.last_recv_bytes:
                     print("send_bytes increased while recv_bytes unchanged, logging out...")
                     self.logout()
