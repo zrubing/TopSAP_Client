@@ -63,7 +63,7 @@ class AutoLoginTopSap():
         """
         获取验证码图片
         """
-        response = self.session.get(self.code_url, verify=False)
+
         with open('result.png', 'wb') as f:
             f.write(response.content)
         return response.content
