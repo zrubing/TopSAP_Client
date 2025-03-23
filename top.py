@@ -36,6 +36,8 @@ class AutoLoginTopSap():
         self.last_send_bytes = None
         self.last_check_time = time.time()
 
+        self.already_check = False;
+
     def construct_code_url(self):
         params = {
             'serverAddr': self.host,
@@ -113,9 +115,17 @@ class AutoLoginTopSap():
                     self.logout()
                     self.login()
 
-        self.last_recv_bytes = recv_bytes
-        self.last_send_bytes = send_bytes
-        self.last_check_time = time.time()
+                    # 重置状态
+                    self.already_check = False
+
+        # 没有做过记录
+        if not self.already_check:
+            self.last_recv_bytes = recv_bytes
+            self.last_send_bytes = send_bytes
+            self.last_check_time = time.time()
+
+            self.already_check = True
+
 
         return response
     
