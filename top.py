@@ -120,6 +120,7 @@ class AutoLoginTopSap():
 
         # 没有做过记录
         if not self.already_check:
+            print("record last recv bytes")
             self.last_recv_bytes = recv_bytes
             self.last_send_bytes = send_bytes
             self.last_check_time = time.time()
