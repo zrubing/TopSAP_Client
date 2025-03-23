@@ -36,7 +36,7 @@ class AutoLoginTopSap():
         self.last_send_bytes = None
         self.last_check_time = time.time()
 
-        self.already_check = False;
+        self.already_check = False
 
     def construct_code_url(self):
         params = {
