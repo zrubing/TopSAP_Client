@@ -64,7 +64,7 @@ class AutoLoginTopSap():
         """
         获取验证码图片
         """
-        response = self.session.get(self.code_url, verify=False)
+        response = self.session.get(self.construct_code_url(), verify=False)
         content_type = response.headers.get('Content-Type')
 
         if 'application/json' in content_type:
