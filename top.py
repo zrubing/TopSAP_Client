@@ -54,7 +54,7 @@ class AutoLoginTopSap():
             'proxyUser': '',
             'proxyPwd': '',
             'proxyDomain': '',
-            'rnd': f'${random.uniform(0, 1)}'  # Generate a random float between 0 and 1
+            'rnd': f'{random.uniform(0, 1)}'  # Generate a random float between 0 and 1
         }
         base_url = "https://localhost:7443/api/v1/get_gid"
         return f"{base_url}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
