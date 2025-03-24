@@ -155,9 +155,12 @@ class AutoLoginTopSap():
         登出
         """
         data = {"method":"logout"}
-        response = self.session.post(self.logout_url, headers=self.form_headers, data=json.dumps(data), verify=False).text
-
-        print(response)
+        try:
+            response = self.session.post(self.logout_url, headers=self.form_headers, data=json.dumps(data), verify=False, timeout=3).text
+            print(response)
+        except requests.exceptions.Timeout:
+            print("Logout request timed out.")
+            return None
 
         return response
     
