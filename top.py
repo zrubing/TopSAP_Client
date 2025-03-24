@@ -57,14 +57,16 @@ class AutoLoginTopSap():
             'rnd': f'{random.uniform(0, 1)}'  # Generate a random float between 0 and 1
         }
         base_url = "https://localhost:7443/api/v1/get_gid"
-        print(base_url)
         return f"{base_url}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
 
     def get_code_img(self):
+
+        url = self.construct_code_url()
+        print(url)
         """
         获取验证码图片
         """
-        response = self.session.get(self.construct_code_url(), verify=False)
+        response = self.session.get(url, verify=False)
         content_type = response.headers.get('Content-Type')
 
         if 'application/json' in content_type:
