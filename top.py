@@ -138,7 +138,6 @@ class AutoLoginTopSap():
                 if send_bytes > self.last_send_bytes and recv_bytes == self.last_recv_bytes:
                     print("send_bytes increased while recv_bytes unchanged, logging out...")
                     self.logout()
-                    self.login()
 
 
         if time.time() - self.last_check_time >= 15:
