@@ -155,7 +155,10 @@ class AutoLoginTopSap():
         登出
         """
         data = {"method":"logout"}
-        response = self.session.post(self.logout_url, headers=self.json_headers, data=json.dumps(data), verify=False).text
+        response = self.session.post(self.logout_url, headers=self.form_headers, data=json.dumps(data), verify=False).text
+
+        print(response)
+
         return response
     
     @retry(stop_max_attempt_number=10)
