@@ -140,17 +140,13 @@ class AutoLoginTopSap():
                     self.logout()
                     self.login()
 
-                    # 重置状态
-                    self.already_check = False
 
-        # 没有做过记录
-        if not self.already_check:
+        if time.time() - self.last_check_time >= 5:
             print("record last recv bytes")
             self.last_recv_bytes = recv_bytes
             self.last_send_bytes = send_bytes
             self.last_check_time = time.time()
 
-            self.already_check = True
 
         return response
     
